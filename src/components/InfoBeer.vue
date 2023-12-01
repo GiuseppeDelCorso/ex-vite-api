@@ -3,12 +3,8 @@
 export default {
   name: "InfoBeer",
   props: {
-
     info: Object
-
   }
-
-
 }
 
 
@@ -26,9 +22,6 @@ export default {
       <p>Paese = {{ info.country }}</p>
       <p>Codice Postale = {{ info.postal_code }}</p>
     </div>
-
-
-
 </template>
 
 <style scoped>

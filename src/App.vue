@@ -1,43 +1,57 @@
 <script>
 import InfoBeer from './components/InfoBeer.vue'
+import findBeer from './components/findBeer.vue'
 import axios from 'axios';
 import { store } from "./store.js"
 
 export default {
       components: {
-        InfoBeer
+        InfoBeer,
+        findBeer
       },
       data() {
 		      return {
-			        store,
+			        store,            
 		}
 	},
   mounted() {
-
 		  this.prova();
 	},
   methods:{
       prova() {
-        axios.get(this.store.apiUrl).then(risultato => {
+         
+        let link = this.store.apiUrl
 
-          this.store.caratteristiche = risultato.data
-          console.log(risultato.data[0].name)
-        }) 
+          if(this.store.findString){
+            
+            console.log(this.store.findString)
+            
+            axios.get(link).then(risultato => {
+            this.store.caratteristiche = risultato.data
+            
+          }) 
+          }
 
-        
+          else{
+            axios.get("https://api.openbrewerydb.org/v1/breweries?by_country=austria&per_page=10&by_name" + this.store.findString).then(risultato => {
+              this.store.caratteristiche = risultato.data
+              console.log(risultato.data)
+            }) 
+
+          }                   
       }
-
   }
-
-
-
 }
 </script>
 
 <template>
-  
-  <InfoBeer v-for="caratteristica in store.caratteristiche" :info="caratteristica" />
-
+  <main>
+    <findBeer @search="prova" />
+  </main>
+  <header>
+    <InfoBeer v-for="caratteristica in store.caratteristiche" :info="caratteristica" />
+    
+  </header>
 </template>
 
 <style scoped>
