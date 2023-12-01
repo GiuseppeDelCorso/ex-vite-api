@@ -21,21 +21,23 @@ export default {
       prova() {
          
         let link = this.store.apiUrl
+        console.log(this.store.findString)
 
-          if(this.store.findString){
+          if(this.store.findString == ""){
             
             console.log(this.store.findString)
             
             axios.get(link).then(risultato => {
             this.store.caratteristiche = risultato.data
-            
+            console.log("sono if")
           }) 
           }
 
           else{
-            axios.get("https://api.openbrewerydb.org/v1/breweries?by_country=austria&per_page=10&by_name" + this.store.findString).then(risultato => {
+            axios.get("https://api.openbrewerydb.org/v1/breweries?by_country=austria&per_page=10&by_name=" + this.store.findString).then(risultato => {
               this.store.caratteristiche = risultato.data
               console.log(risultato.data)
+              console.log("sono else")
             }) 
 
           }                   
